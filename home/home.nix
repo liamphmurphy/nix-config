@@ -33,6 +33,11 @@
     nerd-fonts.fira-code
     font-awesome
 
+    # K8s things
+    kubectl
+    kind
+    helm
+    kubectx
   ];
 
 
