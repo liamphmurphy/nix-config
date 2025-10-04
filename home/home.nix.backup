@@ -1,0 +1,456 @@
+{ config, pkgs, inputs, ... }:
+
+{
+
+  # Home Manager needs a bit of information about you and the paths it should
+  # manage.
+  home.username = "liam";
+  home.homeDirectory = "/home/liam";
+
+  imports = [
+	inputs.walker.homeManagerModules.default 
+	./webapps.nix 
+	./hyprland.nix
+  ];
+
+  # This value determines the Home Manager release that your configuration is
+  # compatible with. This helps avoid breakage when a new Home Manager release
+  # introduces backwards incompatible changes.
+  #
+  # You should not change this value, even if you update Home Manager. If you do
+  # want to update the value, then make sure to first check the Home Manager
+  # release notes.
+  home.stateVersion = "25.05"; # Please read the comment before changing.
+
+  fonts.fontconfig.enable = true;
+
+  # The home.packages option allows you to install Nix packages into your
+  # environment.
+  home.packages = with pkgs; [
+    pay-respects
+    btop
+
+    # hyprland things
+    pyprland
+    hyprpicker
+    hyprcursor
+    phinger-cursors
+    hyprlock
+    hypridle
+    hyprpaper
+    hyprsunset
+    hyprpolkitagent
+
+    # nerd fonts, for things like waybar, some vim things etc
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
+    nerd-fonts.fira-code
+    font-awesome
+
+    # # It is sometimes useful to fine-tune packages, for example, by applying
+    # # overrides. You can do that directly here, just don't forget the
+    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+    # # fonts?
+    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+    # # You can also create simple shell scripts directly inside your
+    # # configuration. For example, this adds a command 'my-hello' to your
+    # # environment:
+    # (pkgs.writeShellScriptBin "my-hello" ''
+    #   echo "Hello, ${config.home.username}!"
+    # '')
+  ];
+
+
+  # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  # plain files is through 'home.file'.
+  home.file = {
+    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # # symlink to the Nix store copy.
+    # ".screenrc".source = dotfiles/screenrc;
+
+    # # You can also set the file content immediately.
+    # ".gradle/gradle.properties".text = ''
+    #   org.gradle.console=verbose
+    #   org.gradle.daemon.idletimeout=3600000
+    # '';
+  };
+
+  # Home Manager can also manage your environment variables through
+  # 'home.sessionVariables'. These will be explicitly sourced when using a
+  # shell provided by Home Manager. If you don't want to manage your shell
+  # through Home Manager then you have to manually source 'hm-session-vars.sh'
+  # located at either
+  #
+  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  /etc/profiles/per-user/liam/etc/profile.d/hm-session-vars.sh
+  #
+  home.sessionVariables = {
+    EDITOR = "vim";
+  };
+
+  programs.kitty = {
+    enable = true;
+    settings = {
+      confirm_os_window_close = 0;
+      dynamic_background_opacity = true;
+      enable_audio_bell = false;
+      background_opacity = "0.7";
+      background_blur = 5;
+    };
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    initContent = ''
+      eval "$(pay-respects zsh --alias)"
+    '';
+
+    shellAliases = {
+       ll = "ls -l";
+       update = "sudo nixos-rebuild switch --flake /etc/nixos/#nixos";
+    };
+    
+    history.size = 10000;
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" ];
+      theme = "robbyrussell";
+    };
+  };
+
+  # Let's setup Firefox
+  programs.firefox = {
+    enable = true;
+
+    # Specify the language packs for Firefox
+    languagePacks = [ "en-US" ];
+
+    # Disable telemetry to prevent data collection
+    policies = {
+      DisableTelemetry = true;
+      HardwareAcceleration = true;
+      OfferToSaveLogins = false;
+      DisableFirefoxStudies         = true;
+      DisableFirefoxAccounts        = true;
+      DisableFirefoxScreenshots     = true;
+      DisplayMenuBar = "always";
+    };
+
+    # Configure the default profile settings
+    profiles.default = {
+      # Set default search engine to DuckDuckGo
+      search = {
+        force = true;
+        default = "ddg";
+        privateDefault = "ddg";
+      };
+    };
+  };
+
+
+  programs.git = {
+	enable = true;
+	userEmail = "liam@phmurphy.com";
+	userName = "Liam Murphy";
+  };
+
+  # Walker (hyprland menu) 
+  programs.walker = {
+	enable = true;
+	runAsService = true;
+
+	# All options from the config.toml can be used here.
+	  config = {
+	    placeholders."default".input = "Example";
+	    providers.prefixes = [
+	      {provider = "websearch"; prefix = "+";}
+	      {provider = "providerlist"; prefix = "_";}
+	    ];
+	    keybinds.quick_activate = ["F1" "F2" "F3"];
+	  };
+
+	  # If this is not set the default styling is used.
+	  theme.style = ''
+	    * {
+	      color: #dcd7ba;
+	    }
+	  '';
+  };
+
+  # Waybar things
+  programs.waybar = {
+    enable = true;
+
+    settings = [
+      # Bar on DP-1 (main)
+      {
+        layer = "top";
+        position = "top";
+        height = 32;
+        output = [ "DP-1" ]; # <-- adjust to your monitor name
+        modules-left   = [ "hyprland/workspaces" "hyprland/window" ];
+        modules-center = [ "clock" ];
+        modules-right  = [ "cpu" "memory" "network" "pulseaudio" "battery" "tray" ];
+
+        "hyprland/workspaces" = {
+          # Show workspaces only from this output, but keep mapping stable
+          all-outputs = false;
+          format = "{icon}"; # or "{name}"
+          format-icons = {
+            "1" = "1"; "2" = "2"; "3" = "3"; "4" = "4"; "5" = "5";
+            "default" = "";
+          };
+          on-click = "hyprctl dispatch workspace {id}";
+          persistent-workspaces = {
+            # map specific workspaces to this output
+            "DP-1" = [ 1 2 3 4 5 ];
+          };
+        };
+
+        "hyprland/window" = { max-length = 60; separate-outputs = true; };
+
+        "clock" = { format = "{:%a %b %d  %H:%M}"; tooltip = true; };
+
+        "cpu" = { interval = 2; format = " {usage}%"; };
+        "memory" = { interval = 5; format = " {used:0.1f}G"; };
+        "network" = { format-wifi = "  {essid} {signalStrength}%"; format-ethernet = "  {ifname}"; format-disconnected = "󰖪"; tooltip = true; };
+        "pulseaudio" = { format = "{icon} {volume}%"; format-muted = "󰝟"; format-icons = { default = [ "" "" "" ]; }; tooltip = false; };
+        "battery" = { format = "{icon} {capacity}%"; format-icons = [ "" "" "" "" "" ]; tooltip = true; };
+        "tray" = { spacing = 8; };
+      }
+    ];
+
+    # Minimal, readable styling (tweak as you like)
+    style = ''
+      * { font-family: JetBrainsMono Nerd Font, Iosevka, monospace; font-size: 12pt; }
+      window#waybar { background: rgba(20,20,25,0.75); border-bottom: 1px solid rgba(255,255,255,0.06); }
+      #clock, #cpu, #memory, #network, #pulseaudio, #battery, #tray, #window { padding: 0 10px; }
+      #workspaces button { padding: 0 8px; margin: 4px 2px; border-radius: 8px; }
+      #workspaces button.active { background: rgba(255,255,255,0.12); }
+      #workspaces button.urgent { background: rgba(255,0,0,0.25); }
+    '';
+  };
+
+  # Hyprland
+  ## set cursor
+  home.pointerCursor = {
+	enable = true;
+	package = pkgs.phinger-cursors;
+	name = "phinger-cursors-dark";
+	size = 16;
+  };
+  home.sessionVariables = {
+	NIXOS_OZONE_WL = "1";
+  };
+  services.hyprpaper = {
+	enable = true;
+	settings = {
+	  preload =
+	    [ "/home/liam/Pictures/wall.jpg" ];
+
+	  wallpaper = [
+	    ",/home/liam/Pictures/wall.jpg"
+	  ];
+	};
+  };
+  services.hypridle = {
+    enable = true;
+    # lock after 10 min, then suspend after 15 min
+    settings = {
+      listener = [
+        { timeout = 600; on-timeout = "${pkgs.hyprlock}/bin/hyprlock"; }
+        { timeout = 900; on-timeout = "systemctl suspend"; }
+      ];
+    };
+  };
+  services.hyprsunset.enable = true;
+  wayland.windowManager.hyprland = {
+	enable = true;
+
+	extraConfig = ''
+	      # ensure a single instance
+	      exec-once = pkill waybar; waybar
+	      exec-once = hyprpaper
+	'';
+
+	settings = {
+		general = {
+			layout = "dwindle";
+		};
+		
+		dwindle = {
+			force_split = 2; # make windows split to the right
+		};
+
+		monitor = [
+			"DP-1, 3440x1440@165, 0x0, 1, vrr, 2"
+			"DP-2, disable"
+		];
+
+		exec-once = [
+			"walker --gapplication-service &"
+		];
+
+		input = {
+			kb_layout="us";
+		};
+
+		animations = {
+		    enabled = true;
+		    bezier = [
+			"wind, 0.05, 0.9, 0.1, 1.05"
+			"winIn, 0.1, 1.1, 0.1, 1.1"
+			"winOut, 0.3, -0.3, 0, 1"
+			"liner, 1, 1, 1, 1"
+			"workIn, 0.72, -0.07, 0.41, 0.98"
+		    ];
+		    animation = [
+			"windows, 1, 6, wind, slide"
+			"windowsIn, 1, 6, winIn, slide"
+			"windowsOut, 1, 5, winOut, slide"
+			"windowsMove, 1, 5, wind, slide"
+			"border, 1, 1, liner"
+			"borderangle, 1, 30, liner, loop"
+			"fade, 1, 10, default"
+			"workspaces, 1, 5, wind"
+			"specialWorkspace, 1, 5, workIn, slidevert"
+		    ];
+		};
+
+		"$mod" = "SUPER";
+
+		# Mouse bindings.
+        	bindm = [
+		    "$mod, mouse:272, movewindow"
+		    "$mod, mouse:273, resizewindow"
+		];
+
+		bind = [
+		    # Direct app shortcuts
+		    "$mod, B, exec, firefox"	
+
+		    # Custom made web app shortcuts, web apps defined in ./webapps.nix
+		    "$mod, A, exec, launch-chatgpt" 
+		    "$mod, Y, exec, launch-ytmusic" 
+
+
+		    # Rofi
+		    "$mod, SPACE, exec, walker"
+
+		    # Window/Session actions.
+		    "$mod, Q, killactive,"
+		    "$mod, W, fullscreen, 1"
+		    "$mode SHIFT, W, fullscreen"
+		    "$mod, E, togglefloating,"
+		    "$mod, delete, exit,"
+
+		    # Dwindle
+		    "$mod, O, togglesplit,"
+		    "$mod, P, pseudo,"
+
+		    # Lock screen
+		    "$mod, Escape, exec, hyprlock"
+
+		    # Application shortcuts.
+		    "$mod, Return, exec, kitty"
+		    "$mod SHIFT, Return, exec, kitty --class floating"
+
+		    # Special workspace
+		    "$mod, S, togglespecialworkspace"
+		    "$mod SHIFT, S, movetoworkspacesilent, special"
+
+		    # Launcher
+		    # "$mod, A, exec, rofi -show drun -kb-cancel Super_L"
+		    "$mod SHIFT, A, exec, ags -t launcher"
+
+		    # Screenshot
+		    "$mod SHIFT, z, exec, wl-copy < $(grimshot --notify save area $XDG_PICTURES_DIR/Screenshots/$(TZ=utc date +'screenshot_%Y-%m-%d-%H%M%S.%3N.png'))"
+
+		    # Move window focus with vim keys.
+		    "$mod, h, movefocus, l"
+		    "$mod, l, movefocus, r"
+		    "$mod, k, movefocus, u"
+		    "$mod, j, movefocus, d"
+
+		    # Music control
+		    "$mod ALT, m, exec, pulsemixer --id $(pulsemixer --list-sources | cut -f3 | grep 'Default' | cut -d ',' -f 1 | cut -c 6-) --toggle-mute"
+		    ", XF86AudioMicMute, exec, pulsemixer --id $(pulsemixer --list-sources | cut -f3 | grep 'Default' | cut -d ',' -f 1 | cut -c 6-) --toggle-mute"
+		    ",XF86AudioMute, exec, pulsemixer --id $(pulsemixer --list-sinks | cut -f3 | grep 'Default' | cut -d ',' -f 1 | cut -c 6-) --toggle-mute"
+		    "$mod ALT, l, exec, hyprmusic next"
+		    ",XF86AudioNext, exec, hyprmusic next"
+		    "$mod ALT, h, exec, hyprmusic previous"
+		    ", XF86AudioPrev, exec, hyprmusic previous"
+		    "$mod ALT, p, exec, hyprmusic play-pause"
+		    ", XF86AudioPlay, exec, hyprmusic play-pause"
+
+		    # Swap windows with vim keys
+		    "$mod SHIFT, h, movewindow, l"
+		    "$mod SHIFT, l, movewindow, r"
+		    "$mod SHIFT, k, movewindow, u"
+		    "$mod SHIFT, j, movewindow, d"
+
+		    "$mod SHIFT, c, centerwindow, 1"
+
+		    # Move monitor focus.
+		    "$mod, TAB, focusmonitor, +1"
+
+		    # Switch workspaces.
+		    # Switch workspaces (no exec)
+		    "$mod, 1, workspace, 1"
+		    "$mod, 2, workspace, 2"
+		    "$mod, 3, workspace, 3"
+		    "$mod, 4, workspace, 4"
+		    "$mod, 5, workspace, 5"
+		    "$mod, 6, workspace, 6"
+		    "$mod, 7, workspace, 7"
+		    "$mod, 8, workspace, 8"
+		    "$mod, 9, workspace, 9"
+		    "$mod, 0, workspace, 10"
+
+		    "$mod CTRL, h, workspace, r-1"
+		    "$mod, Left, workspace, r-1"
+		    "$mod CTRL, l, workspace, r+1"
+		    "$mod, Right, workspace, r+1"
+
+		    # Scroll through monitor workspaces with mod + scroll
+		    "$mod, mouse_down, workspace, r-1"
+		    "$mod, mouse_up, workspace, r+1"
+		    "$mod, mouse:274, killactive,"
+
+		    # Move active window to a workspace.
+		    "$mod SHIFT, 1, movetoworkspace, 1"
+		    "$mod SHIFT, 2, movetoworkspace, 2"
+		    "$mod SHIFT, 3, movetoworkspace, 3"
+		    "$mod SHIFT, 4, movetoworkspace, 4"
+		    "$mod SHIFT, 5, movetoworkspace, 5"
+		    "$mod SHIFT, 6, movetoworkspace, 6"
+		    "$mod SHIFT, 7, movetoworkspace, 7"
+		    "$mod SHIFT, 8, movetoworkspace, 8"
+		    "$mod SHIFT, 9, movetoworkspace, 9"
+		    "$mod SHIFT, 0, movetoworkspace, 10"
+		    "$mod CTRL SHIFT, l, movetoworkspace, r+1"
+		    "$mod SHIFT, Right, movetoworkspace, r+1"
+		    "$mod CTRL SHIFT, h, movetoworkspace, r-1"
+		    "$mod SHIFT, Left, movetoworkspace, r-1"
+		];
+	};
+  };
+
+  
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+}
