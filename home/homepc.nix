@@ -1,3 +1,4 @@
+# This file serves as the main home manager nix file for my nixos desktop
 { config, pkgs, inputs, ... }:
 
 {
@@ -10,6 +11,7 @@
   imports = [
 	./webapps.nix 
 	./hyprland.nix
+	./firefox.nix
   ];
 
   # This value determines the Home Manager release that your configuration is
@@ -99,8 +101,7 @@
 
     shellAliases = {
        ll = "ls -l";
-       update = "sudo nixos-rebuild switch --flake ~/nixos#nixos";
-       kc = "kubectl";
+       update = "sudo nixos-rebuild switch --flake ~/nixos#homepc";
     };
     
     history.size = 10000;
@@ -111,36 +112,6 @@
       theme = "robbyrussell";
     };
   };
-
-  # Let's setup Firefox
-  programs.firefox = {
-    enable = true;
-
-    # Specify the language packs for Firefox
-    languagePacks = [ "en-US" ];
-
-    # Disable telemetry to prevent data collection
-    policies = {
-      DisableTelemetry = true;
-      HardwareAcceleration = true;
-      OfferToSaveLogins = false;
-      DisableFirefoxStudies         = true;
-      DisableFirefoxAccounts        = true;
-      DisableFirefoxScreenshots     = true;
-      DisplayMenuBar = "always";
-    };
-
-    # Configure the default profile settings
-    profiles.default = {
-      # Set default search engine to DuckDuckGo
-      search = {
-        force = true;
-        default = "ddg";
-        privateDefault = "ddg";
-      };
-    };
-  };
-
 
   programs.git = {
 	enable = true;

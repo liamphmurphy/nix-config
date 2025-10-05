@@ -54,6 +54,13 @@
     variant = "";
   };
 
+
+  services.power-profiles-daemon.enable = false;
+  powerManagement = {
+	enable = true;
+	cpuFreqGovernor = "performance";
+  };
+
   # Enable CUPS to print documents.
   services.printing.enable = false;
 
@@ -65,6 +72,14 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    extraConfig.pipewire = {
+      "context.properties" = {
+        "default.clock.rate" = 48000;
+        "default.clock.quantum" = 2048;
+        "default.clock.min-quantum" = 2048;
+        "default.clock.max-quantum" = 8192;
+      };
+    };
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -90,7 +105,7 @@
   };
 
 
-  services.desktopManager.plasma6.enable = true;
+  #services.desktopManager.plasma6.enable = true;
   # SDDM + autologin -> Hyprland (Wayland)
   services.displayManager = {
     sddm.enable = true;
@@ -148,6 +163,7 @@
 	audacity
 	gamemode
 	distrobox
+	heroic
   ];
 
 
@@ -165,7 +181,7 @@
     # pass inputs to home-manager module
     extraSpecialArgs = {inherit inputs;};
     users = {
-      "liam" = import ./home/home.nix;
+      "liam" = import ./home/homepc.nix;
     };
   };
 
