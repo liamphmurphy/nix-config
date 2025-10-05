@@ -1,35 +1,41 @@
-# This is for any development env config that is likely to be cross-platform
+# Cross-platform dev env (Home Manager module)
 { config, pkgs, lib, ... }:
 
 {
-   # Details o nwaht this does: https://github.com/nix-community/home-manager/blob/release-25.05/modules/programs/go.nix
-   programs.go.enable = true;
+  # Go toolchain via HM
+  programs.go.enable = true;
 
-   home.packages = with pkgs; [
-	# K8s things
-	kubectl
-	kind
-	kubernetes-helm
-	kubectx
+  home.packages = with pkgs; [
+    # K8s
+    kubectl
+    kind
+    kubernetes-helm
+    kubectx
 
-	git
-   ];
+    # VCS & editor deps
+    git
+    ripgrep
+    fd
+    tree-sitter
+    lua-language-server
+    nodejs
+    gcc
 
+    # (optional) Go LSP for LazyVim extras.lang.go
+    go
+    gopls
+  ];
 
-  # Setup neovim
+  # Neovim core
   programs.neovim = {
-	enable = true;
-
-	defaultEditor = true;
+    enable = true;
+    defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    # No xdg.* here — keep this block strictly for neovim options.
+  };
 
-    # tools LazyVim expects
-    extraPackages = with pkgs; [
-      ripgrep fd git tree-sitter lua-language-server nodejs
-      gcc # for native builds
-    ];
-
+  # --- LazyVim bootstrap & config files ---
   # ~/.config/nvim/init.lua
   xdg.configFile."nvim/init.lua".text = ''
     vim.g.mapleader = " "
@@ -38,8 +44,8 @@
     local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
     if not vim.loop.fs_stat(lazypath) then
       vim.fn.system({
-        "git","clone","--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git","--branch=stable", lazypath
+        "git", "clone", "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath
       })
     end
     vim.opt.rtp:prepend(lazypath)
@@ -53,9 +59,12 @@
     require("lazy").setup({
       spec = {
         { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+
         -- Extras you want:
         { import = "lazyvim.plugins.extras.lang.go" },
+        -- Enable if you use it; requires auth inside Neovim
         { import = "lazyvim.plugins.extras.coding.copilot" },
+
         -- Your own plugins folder:
         { import = "plugins" },
       },
@@ -63,22 +72,24 @@
       install = { colorscheme = { "tokyonight", "habamax" } },
       checker = { enabled = false },
       performance = {
-        rtp = { disabled_plugins = { "gzip","tarPlugin","tohtml","tutor","zipPlugin" } },
+        rtp = {
+          disabled_plugins = { "gzip", "tarPlugin", "tohtml", "tutor", "zipPlugin" },
+        },
       },
     })
   '';
 
-  # Example: your own plugin spec at ~/.config/nvim/lua/plugins/init.lua
+  # Example plugin spec: ~/.config/nvim/lua/plugins/init.lua
   xdg.configFile."nvim/lua/plugins/init.lua".text = ''
     return {
       { "nvim-lualine/lualine.nvim", opts = {} },
       { "folke/which-key.nvim", opts = {} },
     }
   '';
-  };
 
+  # Environment
   home.sessionVariables = {
-    EDITOR = "neovim";
+    EDITOR = "nvim";
   };
-
 }
+
