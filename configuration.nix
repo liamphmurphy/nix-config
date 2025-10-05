@@ -89,6 +89,8 @@
     ];
   };
 
+
+  services.desktopManager.plasma6.enable = true;
   # SDDM + autologin -> Hyprland (Wayland)
   services.displayManager = {
     sddm.enable = true;
@@ -137,14 +139,15 @@
 	vulkan-tools
 	obs-studio
 	obsidian
+	pcloud
 	protonup-qt
 	fastfetch
 	hyprlock
-	megasync
 	nemo
 	protonvpn-gui
 	audacity
 	gamemode
+	distrobox
   ];
 
 
