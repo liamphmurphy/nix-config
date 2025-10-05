@@ -12,6 +12,7 @@
 	./webapps.nix 
 	./hyprland.nix
 	./firefox.nix
+	./git.nix
   ];
 
   # This value determines the Home Manager release that your configuration is
@@ -111,12 +112,6 @@
       plugins = [ "git" "kubectl" "helm" "golang" ];
       theme = "robbyrussell";
     };
-  };
-
-  programs.git = {
-	enable = true;
-	userEmail = "liam@phmurphy.com";
-	userName = "Liam Murphy";
   };
 
   # Let Home Manager install and manage itself.
