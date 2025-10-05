@@ -1,4 +1,7 @@
 # Cross-platform dev env (Home Manager module)
+# Things like neovim can't be fully controlled by the nix language, but you can
+# write the config inline here, so that whenever you run a new flake switch,
+# that file is rewritten.
 { config, pkgs, lib, ... }:
 
 {
@@ -63,7 +66,7 @@
         -- Extras you want:
         { import = "lazyvim.plugins.extras.lang.go" },
         -- Enable if you use it; requires auth inside Neovim
-        { import = "lazyvim.plugins.extras.coding.copilot" },
+        { import = "lazyvim.plugins.extras.ai.copilot" },
 
         -- Your own plugins folder:
         { import = "plugins" },
