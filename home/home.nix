@@ -36,7 +36,7 @@
     # K8s things
     kubectl
     kind
-    helm
+    kubernetes-helm
     kubectx
   ];
 
