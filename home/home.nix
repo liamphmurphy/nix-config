@@ -107,7 +107,7 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "kubectl" ];
+      plugins = [ "git" "kubectl" "helm" "golang" ];
       theme = "robbyrussell";
     };
   };
