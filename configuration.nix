@@ -144,6 +144,7 @@
 	nemo
 	protonvpn-gui
 	audacity
+	gamemode
   ];
 
 

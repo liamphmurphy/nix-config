@@ -100,13 +100,14 @@
     shellAliases = {
        ll = "ls -l";
        update = "sudo nixos-rebuild switch --flake ~/nixos#nixos";
+       kc = "kubectl";
     };
     
     history.size = 10000;
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = [ "git" "kubectl" ];
       theme = "robbyrussell";
     };
   };
