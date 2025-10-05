@@ -98,21 +98,6 @@
 			force_split = 2; # make windows split to the right
 		};
 
-		windowrulev2 = [
-		      # Catch-all for MEGAsync stuff
-		      "float,class:^(MEGAsync)$"
-		      "center,class:^(MEGAsync)$"
-		      "opacity 1.0,class:^(MEGAsync)$"
-
-		      # The problematic setup dialog specifically
-		      "size 1000 720,title:^(Set up MEGA)$"
-		      "center,title:^(Set up MEGA)$"
-		      "float,title:^(Set up MEGA)$"
-		      # Optional: keep it above other windows while you finish setup
-		      "stayfocused,title:^(Set up MEGA)$"
-		      "pin,title:^(Set up MEGA)$"
-		];
-
 		monitor = [
 			"DP-1, 3440x1440@165, 0x0, 1, vrr, 2"
 			"DP-2, disable"
