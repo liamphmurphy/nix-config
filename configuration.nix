@@ -17,6 +17,10 @@
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  # kernel params
+  boot.kernelParams = [
+    "split_lock_detect=off" # TODO: adding this since a split lock detection caused a crash when playing plague tale requiem...
+  ];
 
   networking.hostName = "lime"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
