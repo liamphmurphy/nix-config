@@ -10,7 +10,7 @@
 
   imports = [
 	./webapps.nix 
-	./hyprland.nix
+	#./hyprland.nix
 	./firefox.nix
 	./git.nix
 	./terminal.nix

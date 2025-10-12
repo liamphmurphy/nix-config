@@ -26,7 +26,7 @@
 
     shellAliases = {
        ll = "ls -l";
-       update = "sudo nixos-rebuild switch --flake ~/nixos#homepc";
+       update = "sudo nixos-rebuild switch --flake ~/nix-config#homepc";
     };
     
     history.size = 10000;

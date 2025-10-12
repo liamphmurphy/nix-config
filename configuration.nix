@@ -109,19 +109,25 @@
   };
 
 
-  #services.desktopManager.plasma6.enable = true;
-  # SDDM + autologin -> Hyprland (Wayland)
+  services.desktopManager.plasma6.enable = true;
   services.displayManager = {
     sddm.enable = true;
     sddm.wayland.enable = true;     
     autoLogin.enable = true;
     autoLogin.user = "liam";        
-    defaultSession = "hyprland-uwsm";   
   };
 
 
   virtualisation = {
-     libvirtd.enable = true;
+     libvirtd = {
+        enable = true;
+
+        qemu = {
+          package = pkgs.qemu_kvm;
+          swtpm.enable = true;
+          runAsRoot = false;
+        };
+      };
   
      containers.enable = true;
      podman = {
@@ -153,31 +159,30 @@
   environment.systemPackages = with pkgs; [
   	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   	wget
-	discord
-	gnome-disk-utility
-	vulkan-tools
-	obs-studio
-	obsidian
-	pcloud
-	protonup-qt
-	fastfetch
-	hyprlock
-	nemo
-	protonvpn-gui
-	audacity
-	gamemode
-	distrobox
-	heroic
+    discord
+    gnome-disk-utility
+    vulkan-tools
+    obs-studio
+    obsidian
+    megasync
+    protonup-qt
+    fastfetch
+    hyprlock
+    protonvpn-gui
+    audacity
+    gamemode
+    distrobox
+    heroic
   ];
 
 
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-    xwayland.enable = true;
-  };
+  #programs.hyprland = {
+  #  enable = true;
+  #  withUWSM = true;
+  #  xwayland.enable = true;
+  #};
 
-  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+  #programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
 
 
   # Setup home manager
