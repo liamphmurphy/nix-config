@@ -3,9 +3,13 @@
 {
 
   programs.git = {
-	enable = true;
-	userEmail = "liam@phmurphy.com";
-	userName = "Liam Murphy";
+    enable = true;
+    settings = {
+      user = {
+        email = "liam@phmurphy.com";
+        name = "Liam Murphy";
+      };
+    };
   };
 
 }
