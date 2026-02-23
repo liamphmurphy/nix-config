@@ -3,8 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    walker.url = "github:abenz1267/walker";
+    #hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    #walker.url = "github:abenz1267/walker";
 
     home-manager = {
       url = "github:nix-community/home-manager";

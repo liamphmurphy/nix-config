@@ -13,7 +13,7 @@
       HardwareAcceleration = true;
       OfferToSaveLogins = false;
       DisableFirefoxStudies         = true;
-      DisableFirefoxAccounts        = true;
+      DisableFirefoxAccounts        = false;
       DisableFirefoxScreenshots     = true;
       DisplayMenuBar = "always";
     };

@@ -5,8 +5,8 @@
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "liam";
-  home.homeDirectory = "/home/liam";
+  home.username = "amelia";
+  home.homeDirectory = "/home/amelia";
 
   imports = [
 	./webapps.nix 

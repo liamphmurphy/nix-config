@@ -8,25 +8,20 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/9217df3e-06b0-418a-af32-c6880b67fb53";
+    { device = "/dev/disk/by-uuid/bc96e319-2a59-46a3-ae48-7367145933ae";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/F081-289F";
+    { device = "/dev/disk/by-uuid/4BEA-7921";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
-    };
-
-  fileSystems."/home/liam/drives/chungus" =
-    { device = "/dev/disk/by-uuid/fe9c0b66-4325-433d-92b1-574011ffcd04";
-      fsType = "ext4";
     };
 
   swapDevices = [ ];

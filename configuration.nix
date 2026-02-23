@@ -97,9 +97,9 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.zsh.enable = true;
-  users.users.liam = {
+  users.users.amelia = {
     isNormalUser = true;
-    description = "Liam Murphy";
+    description = "Amelia Murphy";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
@@ -114,7 +114,7 @@
     sddm.enable = true;
     sddm.wayland.enable = true;     
     autoLogin.enable = true;
-    autoLogin.user = "liam";        
+    autoLogin.user = "amelia";
   };
 
 
@@ -158,22 +158,25 @@
   environment.systemPackages = with pkgs; [
   	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   	wget
-    discord
+    vesktop
     gnome-disk-utility
     vulkan-tools
     obs-studio
     obsidian
-    megasync
     protonup-qt
     fastfetch
-    hyprlock
     protonvpn-gui
     audacity
     gamemode
     distrobox
     heroic
     lact
-    nextcloud-client
+    filen-desktop
+    shipwright
+    _2ship2harkinian
+    element-desktop
+    papirus-icon-theme
+    onlyoffice-desktopeditors
   ];
 
   # Allow overclicking of my AMD 7900 GRE
@@ -194,6 +197,13 @@
 # Tailscale 
  services.tailscale.enable = true;
 
+# automate deleting unneeded nix files
+ nix.gc = {
+  automatic = true;
+  dates = "weekly";
+  options = "--delete-older-than 30d";
+};
+
 
   #programs.hyprland = {
   #  enable = true;
@@ -209,7 +219,7 @@
     # pass inputs to home-manager module
     extraSpecialArgs = {inherit inputs;};
     users = {
-      "liam" = import ./home/homepc.nix;
+      "amelia" = import ./home/homepc.nix;
     };
   };
 
