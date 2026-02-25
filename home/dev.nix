@@ -25,7 +25,6 @@
     gcc
 
     # (optional) Go LSP for LazyVim extras.lang.go
-    go
     gopls
   ];
 
@@ -89,6 +88,7 @@
       { "folke/which-key.nvim", opts = {} },
     }
   '';
+  # --- END LazyVim bootstrap ---
 
   # Environment
   home.sessionVariables = {
