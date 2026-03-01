@@ -27,6 +27,7 @@
     shellAliases = {
        ll = "ls -l";
        update = "sudo nixos-rebuild switch --flake ~/nix-config#homepc";
+       restartshell = "systemctl --user restart plasma-plasmashell";
     };
     
     history.size = 10000;

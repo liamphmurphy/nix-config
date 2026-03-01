@@ -3,8 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    #hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    #walker.url = "github:abenz1267/walker";
+    claude-desktop.url = "github:aaddrick/claude-desktop-debian";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -12,7 +11,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, claude-desktop, ... }@inputs: {
     # use "nixos", or your hostname as the name of the configuration
     # it's a better practice than "default" shown in the video
     nixosConfigurations.homepc = nixpkgs.lib.nixosSystem {

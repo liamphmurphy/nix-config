@@ -2,13 +2,19 @@
 # Things like neovim can't be fully controlled by the nix language, but you can
 # write the config inline here, so that whenever you run a new flake switch,
 # that file is rewritten.
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [ inputs.claude-desktop.overlays.default ];
+  #environment.systemPackages = [ pkgs.claude-desktop ];
+
   # Go toolchain via HM
   programs.go.enable = true;
 
   home.packages = with pkgs; [
+    uv
+  
     # K8s
     kubectl
     kind
@@ -26,6 +32,9 @@
 
     # (optional) Go LSP for LazyVim extras.lang.go
     gopls
+
+    claude-code
+    claude-desktop
   ];
 
   # Neovim core

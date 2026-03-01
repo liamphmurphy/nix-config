@@ -108,12 +108,15 @@
     ];
   };
 
+  # allow dynamic linking
+  programs.nix-ld.enable = true;
 
   services.desktopManager.plasma6.enable = true;
   programs.kdeconnect.enable = true;
   services.displayManager = {
-    sddm.enable = true;
-    sddm.wayland.enable = true;     
+    #sddm.enable = true;
+    #sddm.wayland.enable = true;     
+    plasma-login-manager.enable = true;
     autoLogin.enable = true;
     autoLogin.user = "amelia";
   };
@@ -178,6 +181,8 @@
     element-desktop
     papirus-icon-theme
     onlyoffice-desktopeditors
+    zoom-us
+    faugus-launcher
   ];
 
   # Allow overclicking of my AMD 7900 GRE
