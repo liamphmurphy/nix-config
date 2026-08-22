@@ -97,9 +97,9 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   programs.zsh.enable = true;
-  users.users.amelia = {
+  users.users.liam = {
     isNormalUser = true;
-    description = "Amelia Murphy";
+    description = "Liam Murphy";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
@@ -118,7 +118,7 @@
     #sddm.wayland.enable = true;     
     plasma-login-manager.enable = true;
     autoLogin.enable = true;
-    autoLogin.user = "amelia";
+    autoLogin.user = "liam";
   };
 
 
@@ -225,7 +225,7 @@
     # pass inputs to home-manager module
     extraSpecialArgs = {inherit inputs;};
     users = {
-      "amelia" = import ./home/homepc.nix;
+      "liam" = import ./home/homepc.nix;
     };
   };
 
