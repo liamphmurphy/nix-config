@@ -15,7 +15,6 @@
       DisableFirefoxStudies         = true;
       DisableFirefoxAccounts        = false;
       DisableFirefoxScreenshots     = true;
-      DisplayMenuBar = "always";
     };
 
     # Configure the default profile settings

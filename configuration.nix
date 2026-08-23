@@ -2,21 +2,26 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.default
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.default
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Use Chaotic Nyx's default CachyOS kernel.
+  boot.kernelPackages = pkgs.linuxPackages_cachyos;
   # kernel params
   boot.kernelParams = [
     "split_lock_detect=off" # TODO: adding this since a split lock detection caused a crash when playing plague tale requiem...
@@ -58,11 +63,10 @@
     variant = "";
   };
 
-
   services.power-profiles-daemon.enable = false;
   powerManagement = {
-	enable = true;
-	cpuFreqGovernor = "performance";
+    enable = true;
+    cpuFreqGovernor = "performance";
   };
 
   # Enable CUPS to print documents.
@@ -100,11 +104,14 @@
   users.users.liam = {
     isNormalUser = true;
     description = "Liam Murphy";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -115,35 +122,37 @@
   programs.kdeconnect.enable = true;
   services.displayManager = {
     #sddm.enable = true;
-    #sddm.wayland.enable = true;     
+    #sddm.wayland.enable = true;
     plasma-login-manager.enable = true;
     autoLogin.enable = true;
     autoLogin.user = "liam";
   };
 
-
   virtualisation = {
-     libvirtd = {
-        enable = true;
-        qemu = {
-          package = pkgs.qemu_kvm;
-          swtpm.enable = true;
-          runAsRoot = false;
-        };
+    libvirtd = {
+      enable = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        swtpm.enable = true;
+        runAsRoot = false;
       };
-  
-     containers.enable = true;
-     podman = {
-       enable = true;
-       dockerCompat = true;
-       defaultNetwork.settings.dns_enabled = true; # Required for containers under podman-compose to be able to talk to each other.
-     };
-   };
+    };
+
+    containers.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true; # Required for containers under podman-compose to be able to talk to each other.
+    };
+  };
 
   programs.virt-manager.enable = true;
 
   # enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -160,8 +169,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  	wget
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
     vesktop
     gnome-disk-utility
     vulkan-tools
@@ -169,28 +178,35 @@
     obsidian
     protonup-qt
     fastfetch
-    protonvpn-gui
+    proton-vpn
     audacity
     gamemode
     distrobox
     heroic
     lact
     filen-desktop
-    shipwright
-    _2ship2harkinian
     element-desktop
     papirus-icon-theme
     onlyoffice-desktopeditors
     zoom-us
     faugus-launcher
+
+    # chaotic nyx items
+    linux_cachyos
+    proton-cachyos_x86_64_v3
   ];
+
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryPackage = pkgs.pinentry-qt;
+  };
 
   # Allow overclicking of my AMD 7900 GRE
   hardware.amdgpu.overdrive.enable = true;
   systemd.services.lact = {
     description = "AMDGPU Control Daemon";
-    after = ["mult-user.target"];
-    wantedBy = ["multi-user.target"];
+    after = [ "mult-user.target" ];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       ExecStart = "${pkgs.lact}/bin/lact daemon";
     };
@@ -200,16 +216,15 @@
   networking.firewall.enable = true;
   networking.nftables.enable = true;
 
-# Tailscale 
- services.tailscale.enable = true;
+  # Tailscale
+  services.tailscale.enable = true;
 
-# automate deleting unneeded nix files
- nix.gc = {
-  automatic = true;
-  dates = "weekly";
-  options = "--delete-older-than 30d";
-};
-
+  # automate deleting unneeded nix files
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
   #programs.hyprland = {
   #  enable = true;
@@ -219,11 +234,10 @@
 
   #programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
 
-
   # Setup home manager
   home-manager = {
     # pass inputs to home-manager module
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = { inherit inputs; };
     users = {
       "liam" = import ./home/homepc.nix;
     };

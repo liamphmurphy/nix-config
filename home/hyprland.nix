@@ -147,7 +147,6 @@
 		   "$mod, O, exec, obsidian"
 
 		   # Custom made web app shortcuts, web apps defined in ./webapps.nix
-		   "$mod, A, exec, launch-chatgpt" 
 		   "$mod, Y, exec, launch-ytmusic" 
 
 

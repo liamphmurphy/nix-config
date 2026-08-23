@@ -18,19 +18,10 @@ let
 in
 {
   home.packages = [
-    (mkWebApp { name = "chatgpt"; url = "https://chat.openai.com/"; })
     (mkWebApp { name = "ytmusic"; url = "https://music.youtube.com"; })
   ];
 
   xdg.desktopEntries = {
-    chatgpt = {
-      name = "ChatGPT";
-      exec = "launch-chatgpt";
-      icon = "chatgpt";
-      terminal = false;
-      type = "Application";
-      settings = { StartupWMClass = "webapp-chatgpt"; };
-    };
     ytmusic = {
       name = "YouTube Music";
       exec = "yt-music";

@@ -1,5 +1,10 @@
 # Setup anything related to the terminal config, e.g. kitty / zsh
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
 
@@ -22,19 +27,26 @@
 
     initContent = ''
       eval "$(pay-respects zsh --alias)"
+      fastfetch
     '';
 
     shellAliases = {
-       ll = "ls -l";
-       update = "sudo nixos-rebuild switch --flake ~/nix-config#homepc";
-       restartshell = "systemctl --user restart plasma-plasmashell";
+      ll = "ls -l";
+      update = "sudo nixos-rebuild switch --flake ~/nix-config#homepc";
+      restartshell = "systemctl --user restart plasma-plasmashell";
+      v = "vim";
     };
-    
+
     history.size = 10000;
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "kubectl" "helm" "golang" ];
+      plugins = [
+        "git"
+        "kubectl"
+        "helm"
+        "golang"
+      ];
       theme = "robbyrussell";
     };
   };

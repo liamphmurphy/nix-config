@@ -33,8 +33,29 @@
     # (optional) Go LSP for LazyVim extras.lang.go
     gopls
 
-    claude-code
-    claude-desktop
+    # Rust: compiler, Cargo tools, and the language server used by LazyVim.
+    rustc
+    cargo
+    rust-analyzer
+    rustfmt
+    clippy
+
+    # Python: interpreter plus the language server and formatter/linter used
+    # by LazyVim's Python extra.  Project-specific dependencies should still
+    # live in a virtual environment (for example, managed with uv).
+    python3
+    pyright
+    ruff
+
+    # Markdown: language server and linting.
+    marksman
+    markdownlint-cli
+
+    # Nix: language server and formatter.
+    nixd
+    nixfmt-rfc-style
+
+    codex
   ];
 
   # Neovim core
@@ -73,6 +94,10 @@
 
         -- Extras you want:
         { import = "lazyvim.plugins.extras.lang.go" },
+        { import = "lazyvim.plugins.extras.lang.rust" },
+        { import = "lazyvim.plugins.extras.lang.python" },
+        { import = "lazyvim.plugins.extras.lang.markdown" },
+        { import = "lazyvim.plugins.extras.lang.nix" },
         -- Enable if you use it; requires auth inside Neovim
         { import = "lazyvim.plugins.extras.ai.copilot" },
 
@@ -104,4 +129,3 @@
     EDITOR = "nvim";
   };
 }
-
