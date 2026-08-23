@@ -1,8 +1,14 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   # Let's setup Firefox
   programs.firefox = {
     enable = true;
+    configPath = ".mozilla/firefox";
 
     # Specify the language packs for Firefox
     languagePacks = [ "en-US" ];
@@ -12,9 +18,9 @@
       DisableTelemetry = true;
       HardwareAcceleration = true;
       OfferToSaveLogins = false;
-      DisableFirefoxStudies         = true;
-      DisableFirefoxAccounts        = false;
-      DisableFirefoxScreenshots     = true;
+      DisableFirefoxStudies = true;
+      DisableFirefoxAccounts = false;
+      DisableFirefoxScreenshots = true;
     };
 
     # Configure the default profile settings

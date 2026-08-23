@@ -2,10 +2,15 @@
 
 { pkgs, ... }:
 let
-  mkWebApp = { name, url, class ? "webapp-${name}" }:
+  mkWebApp =
+    {
+      name,
+      url,
+      class ? "webapp-${name}",
+    }:
     pkgs.writeShellApplication {
       name = "launch-${name}";
-      runtimeInputs = [ pkgs.chromium ];  # keep chromium in the closure
+      runtimeInputs = [ pkgs.chromium ]; # keep chromium in the closure
       text = ''
         exec chromium \
           --ozone-platform=wayland \
@@ -18,19 +23,23 @@ let
 in
 {
   home.packages = [
-    (mkWebApp { name = "ytmusic"; url = "https://music.youtube.com"; })
+    (mkWebApp {
+      name = "ytmusic";
+      url = "https://music.youtube.com";
+    })
   ];
 
   xdg.desktopEntries = {
     ytmusic = {
       name = "YouTube Music";
-      exec = "yt-music";
+      exec = "launch-ytmusic";
       icon = "youtube";
       terminal = false;
       type = "Application";
-      settings = { StartupWMClass = "webapp-ytmusic"; };
+      settings = {
+        StartupWMClass = "webapp-ytmusic";
+      };
     };
 
   };
 }
-

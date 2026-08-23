@@ -1,6 +1,8 @@
 # Current State
 
-Builds a functional system I like with NixOS, using flake / home-manager. The stuff I can use on non-NixOS systems are seperated into `home/*.nix` files.
+NixOS and Home Manager configuration for the `lime` desktop. Host-specific
+configuration lives in `hosts/lime`; reusable NixOS and Home Manager features
+live in `modules/nixos` and `home/modules` respectively.
 
 # What to do on a first NixOS install
 
@@ -8,8 +10,9 @@ Builds a functional system I like with NixOS, using flake / home-manager. The st
 ```zsh
 nix-shell -p git
 # pull this repo down, cd into it
-# if on nixos, ignore if just doing home-manger: cp /etc/nixos/hardware-configuration.nix .
-sudo nixos-rebuild switch --flake ~/nix-config#homepc ## or whatever host im targeting instead of homepc
+# On NixOS, copy the generated hardware file into hosts/lime/.
+# cp /etc/nixos/hardware-configuration.nix hosts/lime/
+sudo nixos-rebuild switch --flake ~/nix-config#lime
 ```
 
 # Home Manager only on a non-NixOS system
@@ -36,10 +39,10 @@ After the first activation, Home Manager is available directly. Apply later chan
 home-manager switch --flake ~/nix-config#liam
 ```
 
-The standalone configuration currently targets `x86_64-linux` and expects the user to be named `liam` with the home directory `/home/liam`. Change `homeConfigurations.liam` in `flake.nix` and the `home.username` and `home.homeDirectory` values in `home/homepc.nix` when using a different account.
+The standalone configuration currently targets `x86_64-linux` and expects the user to be named `liam` with the home directory `/home/liam`. Change `homeConfigurations.liam` in `flake.nix` and the values in `home/liam/default.nix` when using a different account.
 
-# Next Steps
+# Useful checks
 
-- Setup LazyVim
-- Fix ctrl+c not copying in browsers
-- rice up my waybar config a bit
+```sh
+nix flake check
+```

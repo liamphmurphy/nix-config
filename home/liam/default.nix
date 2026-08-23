@@ -1,7 +1,7 @@
-# This file serves as the main home manager nix file for my nixos desktop
-{ config, pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -9,12 +9,12 @@
   home.homeDirectory = "/home/liam";
 
   imports = [
-	./webapps.nix 
-	#./hyprland.nix
-	./firefox.nix
-	./git.nix
-	./terminal.nix
-	./dev.nix
+    ../modules/webapps.nix
+    ../modules/firefox.nix
+    ../modules/git.nix
+    ../modules/terminal.nix
+    ../modules/dev.nix
+    # ../modules/hyprland.nix
   ];
 
   # This value determines the Home Manager release that your configuration is
@@ -32,6 +32,27 @@
     pay-respects
     btop
 
+    # Desktop applications
+    vesktop
+    gnome-disk-utility
+    vulkan-tools
+    obs-studio
+    obsidian
+    protonup-qt
+    fastfetch
+    proton-vpn
+    audacity
+    gamemode
+    distrobox
+    heroic
+    lact
+    filen-desktop
+    element-desktop
+    papirus-icon-theme
+    onlyoffice-desktopeditors
+    zoom-us
+    faugus-launcher
+
     # nerd fonts, for things like waybar, some vim things etc
     nerd-fonts.jetbrains-mono
     nerd-fonts.iosevka
@@ -39,20 +60,7 @@
     font-awesome
   ];
 
-
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
-
-  programs.home-manager.enable = true;}
+  programs.home-manager.enable = true;
+}

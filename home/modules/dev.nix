@@ -2,19 +2,15 @@
 # Things like neovim can't be fully controlled by the nix language, but you can
 # write the config inline here, so that whenever you run a new flake switch,
 # that file is rewritten.
-{ config, pkgs, lib, inputs, ... }:
+{ pkgs, ... }:
 
 {
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [ inputs.claude-desktop.overlays.default ];
-  #environment.systemPackages = [ pkgs.claude-desktop ];
-
   # Go toolchain via HM
   programs.go.enable = true;
 
   home.packages = with pkgs; [
     uv
-  
+
     # K8s
     kubectl
     kind
@@ -53,7 +49,7 @@
 
     # Nix: language server and formatter.
     nixd
-    nixfmt-rfc-style
+    nixfmt
 
     codex
   ];
@@ -64,6 +60,8 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    withRuby = true;
+    withPython3 = true;
     # No xdg.* here — keep this block strictly for neovim options.
   };
 
