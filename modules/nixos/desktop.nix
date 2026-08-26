@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-  services.printing.enable = false;
   services.desktopManager.plasma6.enable = true;
   programs.kdeconnect.enable = true;
   services.displayManager = {

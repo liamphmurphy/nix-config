@@ -7,6 +7,7 @@
     ../../modules/nixos/desktop.nix
     ../../modules/nixos/gaming.nix
     ../../modules/nixos/nix.nix
+    ../../modules/nixos/printing.nix
     ../../modules/nixos/virtualisation.nix
   ];
 
@@ -52,6 +53,7 @@
     isNormalUser = true;
     description = "Liam Murphy";
     extraGroups = [
+      "lp"
       "networkmanager"
       "wheel"
     ];

@@ -23,6 +23,7 @@
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
+  boot.blacklistedKernelModules = [ "hid_logitech_hidpp" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
