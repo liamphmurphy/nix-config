@@ -124,6 +124,20 @@
   '';
   # --- END LazyVim bootstrap ---
 
+  # OpenCode with the local Ollama server.
+  xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
+    "$schema" = "https://opencode.ai/config.json";
+    model = "ollama/qwen3-coder";
+    provider.ollama = {
+      npm = "@ai-sdk/openai-compatible";
+      name = "Ollama (local)";
+      options.baseURL = "http://127.0.0.1:11434/v1";
+      models."qwen3-coder" = {
+        name = "Qwen3 Coder";
+      };
+    };
+  };
+
   # Environment
   home.sessionVariables = {
     EDITOR = "nvim";

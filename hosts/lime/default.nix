@@ -25,6 +25,9 @@
   services.ollama = {
     enable = true;
     package = pkgs.ollama-rocm;
+    loadModels = [
+      "qwen3-coder"
+    ];
   };
 
   time.timeZone = "America/Los_Angeles";
@@ -62,7 +65,10 @@
       "wheel"
     ];
     shell = pkgs.zsh;
-    packages = [ pkgs.kdePackages.kate ];
+    packages = [
+      pkgs.kdePackages.kate
+      pkgs.lmstudio
+    ];
   };
 
   programs.nix-ld.enable = true;
