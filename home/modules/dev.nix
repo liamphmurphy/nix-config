@@ -55,7 +55,7 @@
       codex
       opencode
     ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       # Darwin uses Apple's compiler toolchain.
       gcc
     ];

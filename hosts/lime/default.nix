@@ -72,6 +72,7 @@
   services.lact.enable = true;
 
   home-manager = {
+    useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
     users.liam = import ../../home/liam;
   };

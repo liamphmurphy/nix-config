@@ -62,7 +62,7 @@
           }
           ''
             cd ${self}
-            nixfmt-tree --ci
+            treefmt --ci
             touch $out
           '';
     };
