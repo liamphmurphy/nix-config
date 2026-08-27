@@ -51,7 +51,9 @@
     nixd
     nixfmt
 
+    # ai things
     codex
+    opencode
   ];
 
   # Neovim core

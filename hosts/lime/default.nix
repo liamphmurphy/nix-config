@@ -58,7 +58,10 @@
       "wheel"
     ];
     shell = pkgs.zsh;
-    packages = [ pkgs.kdePackages.kate ];
+    packages = [
+      pkgs.kdePackages.kate
+      pkgs.ollama-rocm
+    ];
   };
 
   programs.nix-ld.enable = true;

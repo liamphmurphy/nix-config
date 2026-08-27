@@ -32,7 +32,7 @@
 
     shellAliases = {
       ll = "ls -l";
-      update = "nix flake update && sudo nixos-rebuild switch --flake ~/nix-config#lime";
+      update = "nix flake update --flake ~/nix-config & sudo nixos-rebuild switch --flake ~/nix-config#lime";
       restartshell = "systemctl --user restart plasma-plasmashell";
       v = "vim";
     };
