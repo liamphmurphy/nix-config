@@ -65,20 +65,11 @@
       "wheel"
     ];
     shell = pkgs.zsh;
-    packages = [
-      pkgs.kdePackages.kate
-      pkgs.lmstudio
-    ];
   };
 
   programs.nix-ld.enable = true;
   hardware.amdgpu.overdrive.enable = true;
-  systemd.services.lact = {
-    description = "AMDGPU Control Daemon";
-    after = [ "multi-user.target" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig.ExecStart = "${pkgs.lact}/bin/lact daemon";
-  };
+  services.lact.enable = true;
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };

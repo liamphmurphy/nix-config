@@ -95,11 +95,9 @@
     enable = true;
 
     extraConfig = ''
-      	     # ensure a single instance
-      	     exec-once = pkill waybar; waybar
-      	     exec-once = hyprpaper
-      	     exec-once = pcloud
-      	'';
+      # pcloud is intentionally kept as a manually installed application.
+      exec-once = pcloud
+    '';
 
     settings = {
       general = {
@@ -167,12 +165,12 @@
         # Window/Session actions.
         "$mod, Q, killactive,"
         "$mod, W, fullscreen, 1"
-        "$mode SHIFT, W, fullscreen"
+        "$mod SHIFT, W, fullscreen"
         "$mod, E, togglefloating,"
         "$mod, delete, exit,"
 
         # Dwindle
-        "$mod, O, togglesplit,"
+        "$mod, T, togglesplit,"
         "$mod, P, pseudo,"
 
         # Lock screen

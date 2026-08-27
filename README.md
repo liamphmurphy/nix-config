@@ -45,4 +45,7 @@ The standalone configuration currently targets `x86_64-linux` and expects the us
 
 ```sh
 nix flake check
+nix fmt -- --ci
 ```
+
+The flake exposes `nix fmt` and includes a formatting check in `nix flake check`.

@@ -1,8 +1,6 @@
 { pkgs, ... }:
 
 {
-  nixpkgs.config.allowUnfree = true;
-
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "liam";
@@ -52,6 +50,10 @@
     onlyoffice-desktopeditors
     zoom-us
     faugus-launcher
+
+    # User applications
+    kdePackages.kate
+    lmstudio
 
     # nerd fonts, for things like waybar, some vim things etc
     nerd-fonts.jetbrains-mono
