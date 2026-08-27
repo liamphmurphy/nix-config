@@ -22,6 +22,10 @@
   networking.firewall.enable = true;
   networking.nftables.enable = true;
   services.tailscale.enable = true;
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-rocm;
+  };
 
   time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -58,10 +62,7 @@
       "wheel"
     ];
     shell = pkgs.zsh;
-    packages = [
-      pkgs.kdePackages.kate
-      pkgs.ollama-rocm
-    ];
+    packages = [ pkgs.kdePackages.kate ];
   };
 
   programs.nix-ld.enable = true;
