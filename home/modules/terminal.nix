@@ -1,4 +1,4 @@
-# Setup anything related to the terminal config, e.g. kitty / zsh
+# Setup anything related to the terminal config, e.g. Ghostty / zsh
 {
   config,
   pkgs,
@@ -8,14 +8,32 @@
 
 {
 
-  programs.kitty = {
+  programs.ghostty = {
     enable = true;
     settings = {
-      confirm_os_window_close = 0;
-      dynamic_background_opacity = true;
-      enable_audio_bell = false;
-      background_opacity = "0.7";
-      background_blur = 5;
+      confirm-close-surface = false;
+      background-opacity = 0.7;
+      background-blur-radius = 5;
+      font-size = 12;
+    };
+  };
+
+  # Plasma cannot activate Ghostty's D-Bus desktop entry reliably, even though
+  # launching the executable directly works.
+  xdg.desktopEntries = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+    "com.mitchellh.ghostty" = {
+      name = "Ghostty";
+      genericName = "Terminal Emulator";
+      exec = "ghostty --gtk-single-instance=true";
+      icon = "com.mitchellh.ghostty";
+      terminal = false;
+      categories = [
+        "System"
+        "TerminalEmulator"
+      ];
+      settings = {
+        DBusActivatable = "false";
+      };
     };
   };
 

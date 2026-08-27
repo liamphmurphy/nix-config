@@ -35,5 +35,13 @@
         extraSpecialArgs = { inherit inputs; };
         modules = [ ./home/liam ];
       };
+
+      homeConfigurations.work = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+        };
+        extraSpecialArgs = { inherit inputs; };
+        modules = [ ./home/work ];
+      };
     };
 }

@@ -179,8 +179,8 @@
         "$mod, Escape, exec, hyprlock"
 
         # Application shortcuts.
-        "$mod, Return, exec, kitty"
-        "$mod SHIFT, Return, exec, kitty --class floating"
+        "$mod, Return, exec, ghostty"
+        "$mod SHIFT, Return, exec, ghostty --class floating"
 
         # Special workspace
         "$mod, S, togglespecialworkspace"
