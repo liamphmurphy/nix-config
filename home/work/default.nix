@@ -8,6 +8,7 @@
   imports = [
     ../../modules/terminal.nix
     ../../modules/dev.nix
+    ../../modules/codex.nix
   ];
 
   programs.home-manager.enable = true;

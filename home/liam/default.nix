@@ -13,6 +13,7 @@
     ../modules/git.nix
     ../modules/terminal.nix
     ../modules/dev.nix
+    ../modules/codex.nix
     # ../modules/hyprland.nix
   ];
 
