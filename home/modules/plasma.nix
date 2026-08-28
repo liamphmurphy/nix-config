@@ -8,10 +8,13 @@
       iconTheme = "candy-icons";
     };
 
+    session.sessionRestore.excludeApplications = [ "vesktop" ];
+
     panels = [
       {
         location = "bottom";
         height = 34;
+        hiding = "autohide";
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.pager"
