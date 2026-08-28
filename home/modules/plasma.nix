@@ -11,6 +11,7 @@
     panels = [
       {
         location = "bottom";
+        height = 34;
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.pager"
