@@ -7,6 +7,7 @@
   home.homeDirectory = "/home/liam";
 
   imports = [
+    ../modules/plasma.nix
     ../modules/webapps.nix
     ../modules/firefox.nix
     ../modules/git.nix

@@ -74,6 +74,7 @@
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs; };
+    sharedModules = [ inputs.plasma-manager.homeModules.plasma-manager ];
     users.liam = import ../../home/liam;
   };
 

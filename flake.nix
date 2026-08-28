@@ -6,6 +6,12 @@
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     walker.url = "github:abenz1267/walker";
 
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,7 +43,10 @@
           config.allowUnfree = true;
         };
         extraSpecialArgs = { inherit inputs; };
-        modules = [ ./home/liam ];
+        modules = [
+          inputs.plasma-manager.homeModules.plasma-manager
+          ./home/liam
+        ];
       };
 
       homeConfigurations.work = home-manager.lib.homeManagerConfiguration {
