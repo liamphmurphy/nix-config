@@ -127,6 +127,18 @@
     return {
       { "nvim-lualine/lualine.nvim", opts = {} },
       { "folke/which-key.nvim", opts = {} },
+      {
+        "folke/snacks.nvim",
+        opts = {
+          picker = {
+            sources = {
+              grep = {
+                exclude = { "**/vendor/**" },
+              },
+            },
+          },
+        },
+      },
     }
   '';
   # --- END LazyVim bootstrap ---
