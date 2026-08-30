@@ -52,6 +52,7 @@
       ll = "ls -l";
       update = "nix flake update --flake ~/nix-config && sudo nixos-rebuild switch --flake ~/nix-config#lime";
       restartshell = "systemctl --user restart plasma-plasmashell";
+      gfgp = "git fetch && git pull";
       v = "vim";
     };
 

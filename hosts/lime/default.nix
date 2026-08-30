@@ -60,6 +60,7 @@
     isNormalUser = true;
     description = "Liam Murphy";
     extraGroups = [
+      "docker"
       "lp"
       "networkmanager"
       "wheel"

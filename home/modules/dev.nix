@@ -13,6 +13,9 @@
     [
       uv
 
+      # general dev tools
+      gnumake
+
       # K8s
       kubectl
       kind
