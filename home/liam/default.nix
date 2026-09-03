@@ -55,6 +55,7 @@
 
     # User applications
     kdePackages.kate
+    kdePackages.kio-gdrive
     lmstudio
 
     # nerd fonts, for things like waybar, some vim things etc
@@ -62,6 +63,8 @@
     nerd-fonts.iosevka
     nerd-fonts.fira-code
     font-awesome
+
+    gyb
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

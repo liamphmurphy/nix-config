@@ -8,7 +8,12 @@
       iconTheme = "candy-icons";
     };
 
-    session.sessionRestore.excludeApplications = [ "vesktop" ];
+    session = {
+      sessionRestore = {
+        restoreOpenApplicationsOnLogin = "startWithEmptySession";
+        excludeApplications = [ "vesktop" ];
+      };
+    };
 
     panels = [
       {

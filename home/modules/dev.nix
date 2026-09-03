@@ -56,6 +56,7 @@
 
       # ai things
       codex
+      antigravity-cli
       opencode
     ]
     ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
