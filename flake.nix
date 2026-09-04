@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-chatgpt.url = "github:Moraxyc/nixpkgs/chatgpt-linux";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     walker.url = "github:abenz1267/walker";
 

@@ -56,8 +56,12 @@
 
       # ai things
       codex
-      antigravity-cli
       opencode
+
+      dropbox
+    ]
+    ++ lib.optionals (pkgs.stdenv.hostPlatform.system == "aarch64-darwin") [
+      chatgpt
     ]
     ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       # Darwin uses Apple's compiler toolchain.

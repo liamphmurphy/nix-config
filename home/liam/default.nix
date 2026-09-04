@@ -1,4 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
+
+let
+  chatgptPkgs = import inputs.nixpkgs-chatgpt {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
+in
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -52,10 +59,15 @@
     onlyoffice-desktopeditors
     zoom-us
     faugus-launcher
+    chatgptPkgs.chatgpt
 
     # User applications
     kdePackages.kate
     kdePackages.kio-gdrive
+    kdePackages.kaccounts-providers
+    kdePackages.kaccounts-integration
+    google-drive-ocamlfuse
+
     lmstudio
 
     # nerd fonts, for things like waybar, some vim things etc
